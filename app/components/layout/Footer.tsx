@@ -44,7 +44,7 @@ export default function Footer() {
             </form>
           </div>
 
-          <div className="text-center mb-8 md:mb-12">
+          <div className="text-center mb-3 md:mb-12">
             <h3 className="text-[20px] md:text-[24px] font-poppins font-bold mb-4">Product of Knightowl</h3>
             <div className="flex justify-center">
               <Image
