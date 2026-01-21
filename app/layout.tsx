@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Poppins, Baloo_Bhai_2 } from "next/font/google";
+import { Geist, Geist_Mono, Poppins, Baloo_Bhai_2, Saira } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -22,6 +22,12 @@ const baloo = Baloo_Bhai_2({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-baloo",
+});
+
+const saira = Saira({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-saira",
 });
 
 export const metadata: Metadata = {
@@ -50,7 +56,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} ${baloo.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} ${baloo.variable} ${saira.variable} antialiased`}
       >
         {children}
       </body>

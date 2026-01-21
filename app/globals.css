@@ -32,6 +32,9 @@ body {
 .font-baloo {
   font-family: var(--font-baloo);
 }
+.font-saira {
+  font-family: var(--font-saira);
+}
 
 /* ✅ hide scrollbar for mobile cards */
 .no-scrollbar::-webkit-scrollbar {
