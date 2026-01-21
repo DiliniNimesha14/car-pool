@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 
 type Accent = "green" | "red";
 
@@ -8,28 +9,21 @@ type Card = {
   title: string;
   desc: string;
   accent: Accent;
-  icon: React.ReactNode;
+  iconSrc: string;
 };
 
 
 function IconWrap({
-  accent,
-  children,
+  iconSrc,
 }: {
-  accent: Accent;
-  children: React.ReactNode;
+  iconSrc: string;
 }) {
-  const wrap =
-    accent === "green"
-      ? "bg-green-100 text-green-700"
-      : "bg-red-100 text-red-600";
-
   return (
     <div
-      className={`h-11 w-11 rounded-xl flex items-center justify-center ${wrap}
-      transition-transform duration-300 group-hover:scale-105 group-hover:-rotate-2`}
+      className="h-11 w-11 lg:h-14 lg:w-14 flex items-center justify-center
+      transition-transform duration-300 group-hover:scale-105 group-hover:-rotate-2"
     >
-      {children}
+      <Image src={iconSrc} alt="" width={24} height={24} className="w-6 h-6 lg:w-9 lg:h-9" />
     </div>
   );
 }
@@ -37,7 +31,7 @@ function IconWrap({
 function Underline({ accent }: { accent: Accent }) {
   return (
     <div
-      className={`mt-3 h-[3px] w-14 rounded-full ${
+      className={`hidden lg:block mt-3 h-[3px] w-14 rounded-full ${
         accent === "green" ? "bg-green-500" : "bg-red-500"
       } transition-all duration-300 group-hover:w-20`}
     />
@@ -48,8 +42,8 @@ function FeatureCard({ card }: { card: Card }) {
   return (
     <div
       className="
-        group bg-white rounded-2xl border border-black/10 p-6
-        aspect-square
+        group bg-white rounded-2xl border border-black/10 p-6 sm:p-9 sm:pl-10 sm:pr-2
+        w-[340px] lg:w-auto h-[250px] lg:h-auto lg:aspect-square
         flex flex-col
         shadow-sm
         transition-all duration-300
@@ -58,19 +52,18 @@ function FeatureCard({ card }: { card: Card }) {
       "
     >
       <div className="flex flex-col">
-  <IconWrap accent={card.accent}>{card.icon}</IconWrap>
+        <IconWrap iconSrc={card.iconSrc} />
 
-  <h3 className={`font-poppins mt-4 text-base font-bold text-[#1E272E]`}>
-    {card.title}
-  </h3>
+        <h3 className={`font-poppins mt-3 lg:mt-6 text-[16px] sm:text-[16px] font-bold text-[#1E272E] pb-1 lg:pb-3`}>
+          {card.title}
+        </h3>
 
-  <Underline accent={card.accent} />
+        <Underline accent={card.accent} />
 
-  <p className={`font-baloo mt-4 text-sm text-gray-600 leading-relaxed`}>
-    {card.desc}
-  </p>
-</div>
-
+        <p className={`font-baloo mt-2 lg:mt-6 text-[14px] sm:text-[16px] text-gray-600 leading-[1.5] max-w-[350px]`}>
+          {card.desc}
+        </p>
+      </div>
     </div>
   );
 }
@@ -81,69 +74,38 @@ export default function WhyChooseCarpool() {
       {
         accent: "green",
         title: "Safe & Verified Profiles",
-        desc: "Every user goes through a verification process to ensure trust and safety within your organization.",
-        icon: (
-          // 3 people icon
-          <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor" aria-hidden="true">
-            <path d="M16 11a3 3 0 1 0-2.999-3A3 3 0 0 0 16 11Zm-8 0a3 3 0 1 0-3-3 3 3 0 0 0 3 3Zm4 1a3.5 3.5 0 1 0-3.5-3.5A3.504 3.504 0 0 0 12 12Zm0 2c-3.8 0-7 1.8-7 4a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1c0-2.2-3.2-4-7-4Zm-8 1c-2.7 0-4 1.3-4 3a1 1 0 0 0 1 1h2.2a4.9 4.9 0 0 1 1.5-3.1A5.6 5.6 0 0 0 4 15Zm16 0a5.6 5.6 0 0 0-1.7.9A4.9 4.9 0 0 1 20.8 19H23a1 1 0 0 0 1-1c0-1.7-1.3-3-4-3Z" />
-          </svg>
-        ),
+        desc: "Every user goes through a verification process to ensure trust and safety. This way, you can share rides confidently, knowing that all drivers and riders are genuine.",
+        iconSrc: "/WhyChooseCarpool/Vector.svg",
       },
       {
         accent: "red",
         title: "Affordable & Cost-Saving",
-        desc: "Split travel costs with colleagues and reduce your commuting expenses without sacrificing comfort.",
-        icon: (
-          // credit cards icon
-          <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor" aria-hidden="true">
-            <path d="M3 7a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v1H3V7Zm0 4h18v6a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-6Zm3 3a1 1 0 0 0 0 2h4a1 1 0 0 0 0-2H6Zm9 0a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2h-2Z" />
-          </svg>
-        ),
+        desc: "Sharing rides reduces travel costs for everyone. By splitting expenses, you save money while still enjoying convenient and budget-friendly transportation.",
+        iconSrc: "/WhyChooseCarpool/Group.svg",
       },
       {
         accent: "green",
         title: "Eco-Friendly Travel",
-        desc: "Fewer cars on the road means less traffic and pollution — helping create a cleaner environment.",
-        icon: (
-          // vehicle icon
-          <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor" aria-hidden="true">
-            <path d="M5 11l1.6-4.2A3 3 0 0 1 9.4 5h5.2a3 3 0 0 1 2.8 1.8L19 11v7a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1H8v1a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-7Zm2.3-1h9.4l-1-2.6a1 1 0 0 0-1-.4H9.3a1 1 0 0 0-1 .4L7.3 10ZM7.5 15a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm9 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
-          </svg>
-        ),
+        desc: "Fewer cars on the road mean less traffic and pollution. Choosing carpool contributes to a cleaner environment, while also making every ride more sustainable for the future.",
+        iconSrc: "/WhyChooseCarpool/Vector-1.svg",
       },
       {
         accent: "red",
         title: "Trusted Community",
-        desc: "Build trust through ratings and reviews and connect with reliable colleagues for every trip.",
-        icon: (
-          // heart icon
-          <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor" aria-hidden="true">
-            <path d="M12 21s-7-4.6-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 11c0 5.4-7 10-7 10Z" />
-          </svg>
-        ),
+        desc: "Rating systems and reviews help build trust, allowing you to connect with verified users and build lasting carpool relationships with transparent feedback.",
+        iconSrc: "/WhyChooseCarpool/coolicon.svg",
       },
       {
         accent: "green",
         title: "Easy to Use",
-        desc: "Simple, intuitive experience to publish or find rides quickly, with real-time updates and clarity.",
-        icon: (
-          // tick inside green circle
-          <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor" aria-hidden="true">
-            <path d="M12 2a10 10 0 1 0 10 10A10.01 10.01 0 0 0 12 2Zm-1.1 14.2-3.2-3.2a1 1 0 0 1 1.4-1.4l1.8 1.8 4.5-4.5a1 1 0 0 1 1.4 1.4l-5.9 5.9Z" />
-          </svg>
-        ),
+        desc: "The intuitive app design makes booking rides simple. Chat features, one-tap payments, real-time updates, and quick support are included for a seamless experience.",
+        iconSrc: "/WhyChooseCarpool/Vector-2.svg",
       },
       {
         accent: "red",
         title: "Trip Analytics",
-        desc: "Track your savings and ride history with smart insights — making every commute more measurable.",
-        icon: (
-          // vehicle near "P" banner icon (car + parking sign)
-          <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor" aria-hidden="true">
-            <path d="M3 4a1 1 0 0 1 1-1h7a3 3 0 0 1 0 6H6v2h4a1 1 0 0 1 0 2H6v6a1 1 0 0 1-2 0V4Zm3 1v2h5a1 1 0 0 0 0-2H6Z" />
-            <path d="M11 13l1.1-2.8A2.5 2.5 0 0 1 14.4 9h3.2a2.5 2.5 0 0 1 2.3 1.2L21 13v5a1 1 0 0 1-1 1h-.8a1 1 0 0 1-1-1v-.6h-5.4v.6a1 1 0 0 1-1 1H11a1 1 0 0 1-1-1v-5Zm2.2-1h5.7l-.5-1.2a.7.7 0 0 0-.7-.3h-3.3a.7.7 0 0 0-.7.3L13.2 12Zm.7 3.2a1.1 1.1 0 1 0 0-2.2 1.1 1.1 0 0 0 0 2.2Zm5 0a1.1 1.1 0 1 0 0-2.2 1.1 1.1 0 0 0 0 2.2Z" />
-          </svg>
-        ),
+        desc: "Track your savings, environmental impact, and build your carpool community with detailed insights, ride history, progress tracking, and personalized monthly reports.",
+        iconSrc: "/WhyChooseCarpool/Frame 1597884411.svg",
       },
     ],
     []
@@ -153,32 +115,44 @@ export default function WhyChooseCarpool() {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const [activeDot, setActiveDot] = useState(0);
 
+  // 2 cards stacked per page, 3 pages total
+  const totalPages = 3;
+
+  // Group cards into pairs for stacked display
+  const cardPairs = useMemo(() => {
+    const pairs: Card[][] = [];
+    for (let i = 0; i < cards.length; i += 2) {
+      pairs.push(cards.slice(i, i + 2));
+    }
+    return pairs;
+  }, [cards]);
+
   useEffect(() => {
     const el = scrollerRef.current;
     if (!el) return;
 
     const onScroll = () => {
-      const card = el.querySelector<HTMLElement>("[data-card='true']");
-      if (!card) return;
+      const page = el.querySelector<HTMLElement>("[data-page='true']");
+      if (!page) return;
 
-      // 2 cards visible -> snap items are 50% each (approx). We compute index by card width.
-      const cardW = card.offsetWidth + 16; // +gap-4 approx
-      const idx = Math.round(el.scrollLeft / cardW);
-      setActiveDot(Math.max(0, Math.min(idx, cards.length - 1)));
+      // Calculate page index based on page width
+      const pageW = page.offsetWidth + 16; // +gap-4
+      const idx = Math.round(el.scrollLeft / pageW);
+      setActiveDot(Math.max(0, Math.min(idx, totalPages - 1)));
     };
 
     el.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => el.removeEventListener("scroll", onScroll);
-  }, [cards.length]);
+  }, []);
 
   const scrollToIndex = (i: number) => {
     const el = scrollerRef.current;
     if (!el) return;
-    const card = el.querySelector<HTMLElement>("[data-card='true']");
-    if (!card) return;
-    const cardW = card.offsetWidth + 16;
-    el.scrollTo({ left: i * cardW, behavior: "smooth" });
+    const page = el.querySelector<HTMLElement>("[data-page='true']");
+    if (!page) return;
+    const pageW = page.offsetWidth + 16;
+    el.scrollTo({ left: i * pageW, behavior: "smooth" });
   };
 
   return (
@@ -189,58 +163,62 @@ export default function WhyChooseCarpool() {
 
       <div className="mx-auto w-full max-w-6xl px-6">
         {/* Header */}
-        <div className="mx-auto max-w-3xl text-center">
-  <h2 className="font-poppins text-xl sm:text-2xl md:text-3xl font-extrabold text-white">
-    WHY CHOOSE CARPOOL APP ?
-  </h2>
+        <div className="mx-auto max-w-5xl text-center">
+          <h2 className="font-poppins text-[18px] sm:text-[35px] md:text-[48px] font-extrabold text-white pb-6 sm:pb-10">
+            WHY CHOOSE CARPOOL APP ?
+          </h2>
 
-  <p className="font-baloo mt-4 text-sm sm:text-base text-white/70 leading-relaxed">
-    Carpool App brings drivers and riders together on one platform, making every trip more
-    affordable and efficient. Whether you want to publish a ride or find one, we’ve got you
-    covered. Experience the next generation of workplace transportation.
-  </p>
-</div>
+          <p className="font-poppins mt-4 text-[12px] sm:text-[24px] text-[#F4F4F5] leading-[2] pb-5">
+            Carpool App brings drivers and riders together on one platform, making every trip more
+            affordable and efficient. Whether you want to publish a ride or find one, we've got you
+            covered. Experience the next generation of workplace transportation.
+          </p>
+        </div>
 
 
         {/* ===================== */}
-        {/* MOBILE: 2 cards visible + scroll + dots */}
+        {/* MOBILE: 2 cards stacked }
         {/* ===================== */}
-        <div className="lg:hidden mt-10">
+        <div className="lg:hidden mt-8 sm:mt-10">
           <div
             ref={scrollerRef}
             className="
-              flex gap-4 overflow-x-auto pb-4
+              flex gap-6 overflow-x-auto pb-2
               snap-x snap-mandatory
               scroll-smooth
               [-ms-overflow-style:none] [scrollbar-width:none]
+              [&::-webkit-scrollbar]:hidden
             "
             style={{ WebkitOverflowScrolling: "touch" }}
           >
-            
-
-            {cards.map((c, i) => (
+            {cardPairs.map((pair, pageIndex) => (
               <div
-                key={i}
-                data-card="true"
+                key={pageIndex}
+                data-page="true"
                 className="
-                  snap-start
-                  min-w-[48%]
+                  snap-start snap-always
+                  min-w-full
+                  flex-shrink-0
+                  flex flex-col gap-4
+                  items-center
                 "
               >
-                <FeatureCard card={c} />
+                {pair.map((c, i) => (
+                  <FeatureCard key={i} card={c} />
+                ))}
               </div>
             ))}
           </div>
 
-          {/* dots */}
-          <div className="mt-4 flex justify-center gap-2">
-            {cards.map((_, i) => (
+          {/* dots - 3 pages */}
+          <div className="mt-6 flex justify-center gap-2">
+            {[0, 1, 2].map((i) => (
               <button
                 key={i}
                 type="button"
                 onClick={() => scrollToIndex(i)}
-                aria-label={`Go to card ${i + 1}`}
-                className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${
+                aria-label={`Go to page ${i + 1}`}
+                className={`h-2 w-2 rounded-full transition-all duration-300 ${
                   i === activeDot ? "bg-white scale-110" : "bg-white/30 hover:bg-white/50"
                 }`}
               />
