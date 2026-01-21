@@ -85,27 +85,35 @@ const stats = [
 ];
 
 export default function FAQ() {
-  const [activeTab, setActiveTab] = useState<"employee" | "company">("employee");
-  const [openIndex, setOpenIndex] = useState<number | null>(1); // Second item open by default
+  const [openEmployeeIndex, setOpenEmployeeIndex] = useState<number | null>(1);
+  const [openCompanyIndex, setOpenCompanyIndex] = useState<number | null>(null);
 
-  const currentFAQs = activeTab === "employee" ? employeeFAQs : companyFAQs;
+  const toggleEmployeeAccordion = (index: number) => {
+    setOpenEmployeeIndex(openEmployeeIndex === index ? null : index);
+  };
 
-  const toggleAccordion = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
+  const toggleCompanyAccordion = (index: number) => {
+    setOpenCompanyIndex(openCompanyIndex === index ? null : index);
   };
 
   return (
-    <section id="faq" className="relative  py-16 sm:py-24 overflow-hidden">
-      {/* Background Image */}
+    <section id="faq" className="relative py-16 sm:py-24 overflow-hidden">
+      {/* Background Image - hidden on mobile */}
       <div
-        className="absolute inset-0 -z-10  bg-no-repeat bg-top"
+        className="absolute inset-0 -z-10 bg-no-repeat bg-left-top hidden sm:block"
         style={{ backgroundImage: "url('/FAQ/freepik--freepik--background-complete--inject-481--inject-124.svg')" }}
       />
 
       <Container>
         <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-12">
+          <div className="text-center mb-6 sm:mb-12">
+            {/* FAQs Label */}
+            <div className="flex justify-center mb-5">
+              <div className="px-6 py-2 rounded-lg border-2 border-[#9EA2A5] bg-transparent text-[#9EA2A5] font-poppins text-sm sm:text-[14px] font-medium">
+                FAQs
+              </div>
+            </div>
             <h2 className="font-poppins text-[20px] pb-8 sm:text-[32px] md:text-[48px] font-extrabold text-[#1E272E]">
               FREQUENTLY ASKED QUESTIONS
             </h2>
@@ -114,128 +122,165 @@ export default function FAQ() {
             </p>
           </div>
 
-          {/* Tab Buttons */}
-          <div className="flex justify-center gap-4 mb-8">
-            <button
-              onClick={() => {
-                setActiveTab("employee");
-                setOpenIndex(null);
-              }}
-              className={`
-                font-poppins px-6 py-2.5 rounded-full border-2 transition-all duration-300
-                flex items-center gap-2 text-sm sm:text-[20px]
-                ${
-                  activeTab === "employee"
-                    ? "bg-black text-white border-black"
-                    : "bg-white text-black border-gray-300 hover:border-gray-400"
-                }
-              `}
-            >
-              <Image
-                src="/FAQ/Union 24.svg"
-                alt=""
-                width={20}
-                height={20}
-                className={activeTab === "employee" ? "invert" : ""}
-              />
-              For Employee
-            </button>
+          {/* For Employee Section */}
+          <div className="mb-12">
+            {/* For Employee Label */}
+            <div className="flex justify-center mb-4 sm:mb-8">
+              <div className="font-baloo px-8 py-3 rounded-full border-2 border-black bg-white text-black flex items-center gap-2 text-sm font-semibold sm:text-[20px]">
+                <Image
+                  src="/FAQ/Union 24.svg"
+                  alt=""
+                  width={20}
+                  height={20}
+                  className=""
+                />
+                For Employee
+              </div>
+            </div>
 
-            <button
-              onClick={() => {
-                setActiveTab("company");
-                setOpenIndex(null);
-              }}
-              className={`
-                font-poppins px-6 py-2.5 rounded-full border-2 transition-all duration-300
-                flex items-center gap-2 text-sm sm:text-[20px]
-                ${
-                  activeTab === "company"
-                    ? "bg-black text-white border-black"
-                    : "bg-white text-black border-gray-300 hover:border-gray-400"
-                }
-              `}
-            >
-              <Image
-                src="/FAQ/carbon_location-company.svg"
-                alt=""
-                width={20}
-                height={20}
-                className={activeTab === "company" ? "invert" : ""}
-              />
-              For Companies
-            </button>
-          </div>
-
-          {/* FAQ Accordion */}
-          <div className="space-y-4">
-            {currentFAQs.map((faq, index) => (
-              <div
-                key={index}
-                className={`border border-gray-200 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-md px-10 ${
-                  openIndex === index ? "bg-[#F4F4F5]" : "bg-white"
-                }`}
-              >
-                <button
-                  onClick={() => toggleAccordion(index)}
-                  className="w-full px-6 py-4 flex items-center justify-between text-left transition-colors"
+            {/* Employee FAQ Accordion */}
+            <div className="space-y-4">
+              {employeeFAQs.map((faq, index) => (
+                <div
+                  key={index}
+                  className={`border border-gray-200 sm:rounded-2xl! overflow-hidden hover:shadow-md px-3 sm:px-10 ${
+                    openEmployeeIndex === index ? "bg-[#F4F4F5] rounded-lg" : "bg-white rounded-full"
+                  }`}
+                  style={{ transition: 'background-color 0.3s, box-shadow 0.3s, border-radius 0.05s' }}
                 >
-                  <span className="font-poppins text-sm sm:text-[18px] font-medium text-[#1E272E] pr-4">
-                    {faq.question}
-                  </span>
+                  <button
+                    onClick={() => toggleEmployeeAccordion(index)}
+                    className="w-full px-2 sm:px-6 py-3 sm:py-4 flex items-center justify-between text-left transition-colors"
+                  >
+                    <span className="font-poppins text-[12px] sm:text-[18px] font-medium text-[#1E272E] pr-2 sm:pr-4 text-left">
+                      {faq.question}
+                    </span>
+                    <div
+                      className={`flex-shrink-0 transition-transform duration-300 ${
+                        openEmployeeIndex === index ? "rotate-180" : ""
+                      }`}
+                    >
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M5 7.5L10 12.5L15 7.5"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+
                   <div
-                    className={`flex-shrink-0 transition-transform duration-300 ${
-                      openIndex === index ? "rotate-180" : ""
+                    className={`overflow-hidden transition-[max-height] duration-200 ease-in-out ${
+                      openEmployeeIndex === index ? "max-h-125" : "max-h-0"
                     }`}
                   >
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M5 7.5L10 12.5L15 7.5"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
-                </button>
-
-                <div
-                  className={`overflow-hidden transition-all duration-300 ${
-                    openIndex === index ? "max-h-96" : "max-h-0"
-                  }`}
-                >
-                  <div className="px-6 pb-10 pt-0">
-                    <p className="font-baloo text-sm sm:text-[16px] text-gray-600 leading-relaxed">
-                      {faq.answer}
-                    </p>
+                    <div className="px-6 pb-10 pt-0">
+                      <p className="font-baloo text-sm sm:text-[16px] text-gray-600 leading-relaxed">
+                        {faq.answer}
+                      </p>
+                    </div>
                   </div>
                 </div>
+              ))}
+            </div>
+          </div>
+
+          {/* For Companies Section */}
+          <div className="mb-12">
+            {/* For Companies Label */}
+            <div className="flex justify-center mb-8">
+              <div className="font-baloo px-7 py-3 rounded-full border-2 border-black bg-white text-black flex items-center gap-2 text-sm font-semibold sm:text-[20px]">
+                <Image
+                  src="/FAQ/carbon_location-company.svg"
+                  alt=""
+                  width={24}
+                  height={24}
+                  className=""
+                />
+                For Companies
               </div>
-            ))}
+            </div>
+
+            {/* Company FAQ Accordion */}
+            <div className="space-y-4">
+              {companyFAQs.map((faq, index) => (
+                <div
+                  key={index}
+                  className={`border border-gray-200 sm:rounded-2xl! overflow-hidden hover:shadow-md px-3 sm:px-10 ${
+                    openCompanyIndex === index ? "bg-[#F4F4F5] rounded-lg" : "bg-white rounded-full"
+                  }`}
+                  style={{ transition: 'background-color 0.3s, box-shadow 0.3s, border-radius 0.05s' }}
+                >
+                  <button
+                    onClick={() => toggleCompanyAccordion(index)}
+                    className="w-full px-2 sm:px-6 py-3 sm:py-4 flex items-center justify-between text-left transition-colors"
+                  >
+                    <span className="font-poppins text-[12px] sm:text-[18px] font-medium text-[#1E272E] pr-2 sm:pr-4 text-left">
+                      {faq.question}
+                    </span>
+                    <div
+                      className={`flex-shrink-0 transition-transform duration-300 ${
+                        openCompanyIndex === index ? "rotate-180" : ""
+                      }`}
+                    >
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M5 7.5L10 12.5L15 7.5"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+
+                  <div
+                    className={`overflow-hidden transition-[max-height] duration-200 ease-in-out ${
+                      openCompanyIndex === index ? "max-h-125" : "max-h-0"
+                    }`}
+                  >
+                    <div className="px-6 pb-10 pt-0">
+                      <p className="font-baloo text-sm sm:text-[16px] text-gray-600 leading-relaxed">
+                        {faq.answer}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Stats Section */}
           <div className="mt-16 flex justify-center">
-            <div className="flex items-stretch gap-12 md:gap-16">
+            <div className="flex items-stretch gap-4 sm:gap-12 md:gap-16">
               {stats.map((stat, index) => (
                 <div key={index} className="flex items-stretch">
-                  <div className="text-center px-4">
-                    <div className="font-saira text-3xl sm:text-[40px] font-bold text-[#1E272E]">
+                  <div className="text-center px-1 sm:px-4">
+                    <div className="font-saira text-[16px] sm:text-[40px] font-bold text-[#1E272E]">
                       {stat.value}
                     </div>
-                    <div className="font-saira text-sm sm:text-[20px]  mt-1">
+                    <div className="font-saira text-[10px] sm:text-[20px] mt-1">
                       {stat.label}
                     </div>
                   </div>
                   {index < stats.length - 1 && (
-                    <div className="w-px bg-gray-300 ml-12 md:ml-16 self-stretch" />
+                    <div className="w-px bg-gray-300 ml-4 sm:ml-12 md:ml-16 self-stretch" />
                   )}
                 </div>
               ))}
