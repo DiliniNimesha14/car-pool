@@ -3,6 +3,7 @@ import Footer from "./components/layout/Footer";
 import Hero from "./components/sections/Hero";
 import CarpoolBanner from "./components/sections/CarpoolBanner";
 import WhyChooseCarpool from "./components/sections/WhyChooseCarpool";
+import CarPoolOnBoarding from "./components/sections/CarpoolOnBoarding";
 import EarnWhileDrive from "./components/sections/EarnWhileDrive";
 import TravelSmartSaveBig from "./components/sections/TravelSmartSaveBig";
 import HowAppWorks from "./components/sections/HowAppWorks";
@@ -22,6 +23,7 @@ export default function Home() {
         <Hero />
         <CarpoolBanner />
         <WhyChooseCarpool />
+        <CarPoolOnBoarding />
         <EarnWhileDrive />
         <TravelSmartSaveBig />
         <HowAppWorks />
