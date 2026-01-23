@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Poppins, Baloo_Bhai_2, Saira } from "next/font/google";
+import { Geist, Geist_Mono, Poppins, Baloo_Bhai_2, Saira, Roboto } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -30,6 +30,12 @@ const saira = Saira({
   variable: "--font-saira",
 });
 
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-roboto",
+});
+
 export const metadata: Metadata = {
   title: "Carpool - Share Rides, Split Costs, Work Together",
   description:
@@ -56,7 +62,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} ${baloo.variable} ${saira.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} ${baloo.variable} ${saira.variable} ${roboto.variable} antialiased`}
       >
         {children}
       </body>

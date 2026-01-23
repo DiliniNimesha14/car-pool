@@ -35,6 +35,9 @@ body {
 .font-saira {
   font-family: var(--font-saira);
 }
+.font-roboto {
+  font-family: var(--font-roboto);
+}
 
 /* ✅ hide scrollbar for mobile cards */
 .no-scrollbar::-webkit-scrollbar {
